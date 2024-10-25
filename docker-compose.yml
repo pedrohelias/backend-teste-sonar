@@ -1,0 +1,60 @@
+version: '3'
+services:
+  api_gateway:
+    build: ./http-api-gateway
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./http-api-gateway/src:/usr/src/app/src
+    command: yarn start:dev
+    environment:
+      - PORT=3000
+
+  users_microservice:
+    build: ./users-microservice
+    volumes:
+      - ./users-microservice/src:/usr/src/app/src
+      - ./users-microservice/prisma:/usr/src/app/prisma
+    command: yarn start:dev
+    depends_on:
+      - postgres_db_users
+
+  application_microservice:
+    build: ./application-microservice
+    volumes:
+      - ./application-microservice/src:/usr/src/app/src
+      - ./application-microservice/prisma:/usr/src/app/prisma
+    command: "yarn start:dev"
+    depends_on:
+      - postgres_db_application
+
+  nats:
+    image: nats
+    ports:
+      - 4222:4222
+
+  postgres_db_users:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=users_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - pgdata_users:/var/lib/postgresql/data  # Persistência de dados
+
+  postgres_db_application:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=application_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - pgdata_application:/var/lib/postgresql/data  # Persistência de dados
+
+volumes:
+  pgdata_users:
+  pgdata_application:
