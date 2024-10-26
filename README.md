@@ -2,6 +2,17 @@
 
 # Guia de Inicialização do Backend
 
+## Considerações
+
+Todo o setup foi feito em um ambiente Linux, portanto, em um ambiente Windows ou MAC, pode existir alguns comandos diferentes ou erros inesperados.
+
+## Dependências
+
+- Node em uma versão 18>
+- Docker em uma versão 27>
+- Docker Compose em uma versão  1.29>
+- (Opcional) porém de grande valia, docker desktop
+
 ## Clonando o Repositório
 
 Primeiro, clone o repositório para sua máquina local:
