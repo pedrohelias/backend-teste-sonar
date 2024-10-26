@@ -12,6 +12,8 @@ services:
 
   users_microservice:
     build: ./users-microservice
+    ports:
+      - "5555:5555"
     volumes:
       - ./users-microservice/src:/usr/src/app/src
       - ./users-microservice/prisma:/usr/src/app/prisma
@@ -21,6 +23,8 @@ services:
 
   application_microservice:
     build: ./application-microservice
+    ports:
+      - "5556:5555"
     volumes:
       - ./application-microservice/src:/usr/src/app/src
       - ./application-microservice/prisma:/usr/src/app/prisma
@@ -42,7 +46,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
     volumes:
-      - pgdata_users:/var/lib/postgresql/data  # Persistência de dados
+      - pgdata_users:/var/lib/postgresql/data
 
   postgres_db_application:
     image: postgres
@@ -53,7 +57,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
     volumes:
-      - pgdata_application:/var/lib/postgresql/data  # Persistência de dados
+      - pgdata_application:/var/lib/postgresql/data
 
 volumes:
   pgdata_users:
