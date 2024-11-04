@@ -6,4 +6,6 @@ COPY package.json ./
 
 RUN yarn install
 
+COPY .env.docker .env
+
 COPY . .
