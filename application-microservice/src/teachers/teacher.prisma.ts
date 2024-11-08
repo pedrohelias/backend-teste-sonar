@@ -1,18 +1,18 @@
 // src/modules/schools/prisma/schools.prisma.ts
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
-import { CreateSchoolDto } from './dtos/CreateStudent.dto';
-import { SchoolResponseDto } from './dtos/SchoolResponse.dto';
+import { CreateTeacherDto } from './dtos/CreateTeacher.dto';
+import { TeacherResponseDto } from './dtos/TeacherResponse.dto';
 
 @Injectable()
-export class SchoolsPrismaService {
+export class TeachersPrismaService {
   constructor(private prisma: PrismaService) {}
 
-  async createSchool(data: CreateSchoolDto) {
-    return await this.prisma.school.create({ data });
+  async createTeacher(data:CreateTeacherDto) {
+    return await this.prisma.teacher.create({ data });
   }
 
-  async findAllSchools(): Promise<SchoolResponseDto[]> {
-    return await this.prisma.school.findMany();
+  async findAllTeachers(): Promise<TeacherResponseDto[]> {
+    return await this.prisma.teacher.findMany();
   }
 }

@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString, IsDate } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateTeacherDto {
   @IsNotEmpty()
@@ -14,6 +15,7 @@ export class CreateTeacherDto {
   cpf: string;
 
   @IsNotEmpty()
+  @Type(() => Date)
   @IsDate()
   startDate: Date;
 }
