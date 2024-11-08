@@ -6,8 +6,8 @@ import {
   Payload,
 } from '@nestjs/microservices';
 import { CreateSchoolDto } from './dtos/CreateStudent.dto';
-import { SchoolResponseDto } from './dtos/SchoolResponse.dto';
 import { SchoolsService } from './school.service';
+import { SchoolResponseDto } from './dtos/SchoolResponse.dto';
 
 @Controller()
 export class SchoolMicroserviceController {
