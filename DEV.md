@@ -1,19 +1,33 @@
 ## Dependências
-Sempre que precisar adicionar um novo pacote, instale-o na sua máquina e, para que as mudanças sejam refletidas, execute o container novamente sem a flag `--build`.
+Para adicionar um novo pacote ao projeto, instale-o na sua máquina local. Após a instalação, reinicie o container para que as novas dependências sejam refletidas no ambiente Docker. Observação: não utilize a flag `--build` ao reiniciar o container, pois não é necessário reconstruir a imagem.
 
 ## Migrations
-Nosso projeto é baseado no prisma, portanto, sempre que atualizarmos o `schema.prisma` é necessário fazer a migration na sua máquina local e no docker, portanto, para isso:
+
+O projeto utiliza o Prisma como ORM, e toda vez que houver uma alteração no schema.prisma, você precisará atualizar as migrations tanto na sua máquina local quanto no ambiente Docker. 
+
+Aqui está o processo detalhado:
 
 Na seu terminal:
 
-1. `yarn prisma migrate dev --name "<Nome da migration>"` Isso irá rodar a migration localmente
-2. `yarn docker:migrate` Isso irá rodar a migration no docker
+1. `yarn prisma migrate dev --name "<Nome da migration>"` 
 
-Caso queira resetar as migrations (e o banco de dados), basta:
+Isso aplicará a migration localmente, criando ou atualizando as tabelas no banco de dados conforme as alterações do schema.
 
-1. `yarn prisma migrate reset` Isso irá resetar localmente
-2. `yarn docker:reset` Isso irá resetar no docker
+2. `yarn docker:migrate` 
 
-E por fim, para acessar um visualizador rápido do banco use:
+Este comando aplicará a migration dentro do container Docker.
 
-`yarn docker:studio` Isso irá abrir o prisma studio no container e via porta, irá abrir no seu localhost também
+### Reset
+
+Para resetar o banco de dados e as migrations localmente, utilize:
+
+1. `yarn prisma migrate reset`
+2. `yarn docker:reset`
+
+## Acessando o Prisma Studio
+
+Para visualizar o banco de dados rapidamente e explorar os dados, utilize o Prisma Studio. Para acessá-lo dentro do container Docker e abri-lo no seu navegador local:
+
+`yarn docker:studio` 
+
+Este comando irá abrir o Prisma Studio na porta definida, acessível também via localhost no seu navegador.
