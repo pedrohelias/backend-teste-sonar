@@ -1,5 +1,5 @@
 import { Controller, Inject } from '@nestjs/common';
-import { ClientProxy, EventPattern, Payload,  MessagePattern, } from '@nestjs/microservices';
+import { ClientProxy, EventPattern, Payload, MessagePattern, } from '@nestjs/microservices';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateTeacherDto } from './dtos/CreateTeacher.dto';
 import { TeacherResponseDto } from './dtos/TeacherResponse.dto';
@@ -11,22 +11,41 @@ export class TeacherMicroserviceController {
     @Inject('NATS_SERVICE') private natsClients: ClientProxy,
     private prisma: PrismaService,
     private readonly teachersService: TeachersService,
-  ) {}
-
-  @EventPattern('createTeacher')
+  ) { }
+  @MessagePattern('createTeacher')
   async createTeacher(@Payload() createTeacherDto: CreateTeacherDto) {
-    console.log('NATS RECEIVING', createTeacherDto);
+    try {
+      const teacher = await this.prisma.teacher.create({
+        data: {
+          name: createTeacherDto.name,
+          age: createTeacherDto.age,
+          cpf: createTeacherDto.cpf,
+          startDate: new Date(createTeacherDto.startDate),
+        },
+      });
 
-    await this.prisma.teacher.create({
-      data: {
-        name: createTeacherDto.name,
-        age: createTeacherDto.age,
-        cpf: createTeacherDto.cpf,
-        startDate: createTeacherDto.startDate,
-      },
-    });
-
-    this.natsClients.emit('teacherCreated', createTeacherDto);
+      return {
+        success: true,
+        data: teacher,
+        message: 'Teacher created successfully'
+      };
+    } catch (error) {
+      if (error.code === 'P2002') {
+        return {
+          success: false,
+          error: 'CPF already exists',
+          code: 'UNIQUE_CONSTRAINT'
+        };
+      }
+      if (error.code === 'P2000'){
+        return {
+          success: false,
+          error: 'Value too long for the column',
+          code: 'META_TARGET'
+        };
+      }
+      throw error;
+    }
   }
 
   @MessagePattern('listTeacher')
