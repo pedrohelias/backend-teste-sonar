@@ -37,7 +37,7 @@ model Teacher {
   id        String   @id @default(cuid())
   name      String
   age       Int
-  cpf       String @db.VarChar(14)
+  cpf       String @db.VarChar(14) @unique
   startDate DateTime @map("start_date")
 
   createdAt DateTime @default(now()) @map("created_at")
