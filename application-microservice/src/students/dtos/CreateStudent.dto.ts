@@ -1,4 +1,8 @@
+import { CategorieType, ClassType, TurnType } from '@prisma/client';
+
 export class CreateStudentDto {
   name: string;
-  monthlyPaymentValue: number;
+  categorie: CategorieType;
+  class: ClassType;
+  turn: TurnType;
 }

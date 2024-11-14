@@ -37,8 +37,8 @@ export class StudentMicroserviceController {
     return await this.studentService.update(input);
   }
 
-  @MessagePattern('deleteStudent')
-  async delete(studentId: string) {
-    return await this.studentService.delete(studentId);
+  @MessagePattern('disableStudent')
+  async disable(@Payload() studentId: string) {
+    return await this.studentService.disable(studentId);
   }
 }

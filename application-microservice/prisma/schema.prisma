@@ -16,10 +16,30 @@ datasource db {
 model Student {
   id                  String @id @default(cuid())
   name                String
-  monthlyPaymentValue Int
+  categorie           CategorieType
+  class               ClassType
+  turn                TurnType
+  disabled            Boolean   @default(false)
+  disabledAt          DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum CategorieType {
+  PARCIAL
+  INTEGRAL
+}
+
+enum ClassType {
+  BERCARIO
+  CRECHE
+  ESCOLA
+  REFORCO
+}
+
+enum TurnType {
+  MATUTINO
+  VESPERTINO
 }
 
 model School {

@@ -41,11 +41,15 @@ export class StudentsPrismaService {
     });
   }
 
-  async delete(studentId: string): Promise<StudentResponseDto> {
-    return await this.prisma.student.delete({
+  async disable(studentId: string): Promise<StudentResponseDto> {
+    return await this.prisma.student.update({
       where: {
         id: studentId,
-      }
+      },
+      data: {
+        disabled: true,
+        disabledAt: new Date(),
+      },
     });
   }
 }

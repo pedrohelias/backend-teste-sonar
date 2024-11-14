@@ -27,7 +27,7 @@ export class StudentsController {
   }
 
   @Delete(':studentId')
-  async deleteStudent(@Param('studentId') studentId: string) {
-    return await this.natsClient.send('deleteStudent', studentId);
+  async disableStudent(@Param('studentId') studentId: string) {
+    return await this.natsClient.send('disableStudent', studentId);
   }
 }

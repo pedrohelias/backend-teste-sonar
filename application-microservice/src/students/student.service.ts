@@ -23,7 +23,7 @@ export class StudentsService {
     return await this.studentsPrismaService.update(input);
   }
 
-  async delete(studentId: string): Promise<StudentResponseDto> {
-    return await this.studentsPrismaService.delete(studentId);
+  async disable(studentId: string): Promise<StudentResponseDto> {
+    return await this.studentsPrismaService.disable(studentId);
   }
 }
