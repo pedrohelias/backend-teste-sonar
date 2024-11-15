@@ -52,4 +52,22 @@ export class TeacherMicroserviceController {
   async getAllTeachers(): Promise<TeacherResponseDto[]> {
     return await this.teachersService.findAll();
   }
+
+  @MessagePattern('getTeacher')
+  async get(@Payload() teacherId: string): Promise<TeacherResponseDto> {
+    return await this.teachersService.get(teacherId);
+  }
+
+  @EventPattern('deleteTeacher')
+  async disable(@Payload() teacherId: string) {
+    await this.teachersService.delete(teacherId);
+  }
+
+  @MessagePattern('updateTeacher')
+  async update(
+    @Payload() input: { data: CreateTeacherDto; teacherId: string },
+  ): Promise<TeacherResponseDto> {
+    return await this.teachersService.update(input);
+  }
+
 }

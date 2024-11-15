@@ -1,4 +1,4 @@
-// src/modules/schools/services/schools.service.ts
+// src/modules/teachers/services/teachers.service.ts
 import { Injectable } from '@nestjs/common';
 import { CreateTeacherDto } from './dtos/CreateTeacher.dto';
 import { TeacherResponseDto } from './dtos/TeacherResponse.dto';
@@ -14,5 +14,17 @@ export class TeachersService {
 
   async findAll(): Promise<TeacherResponseDto[]> {
     return await this.teachersPrismaService.findAllTeachers();
+  }
+
+  async get(teacherId: string): Promise<TeacherResponseDto> {
+    return await this.teachersPrismaService.get(teacherId);
+  }
+
+  async delete(teacherId: string): Promise<void> {
+    await this.teachersPrismaService.delete(teacherId);
+  }
+
+  async update(input: { data: CreateTeacherDto; teacherId: string }) {
+    return await this.teachersPrismaService.update(input);
   }
 }

@@ -15,4 +15,33 @@ export class TeachersPrismaService {
   async findAllTeachers(): Promise<TeacherResponseDto[]> {
     return await this.prisma.teacher.findMany();
   }
+
+  async get(teacherId: string): Promise<TeacherResponseDto> {
+    return await this.prisma.teacher.findUnique({
+      where: {
+        id: teacherId,
+      },
+    });
+  }
+
+  async delete(teacherId: string): Promise<void> {
+    await this.prisma.teacher.delete({
+      where: {
+        id: teacherId,
+      },
+    });
+  }
+
+  async update(input: {
+    data: CreateTeacherDto;
+    teacherId: string;
+  }): Promise<TeacherResponseDto> {
+    return await this.prisma.teacher.update({
+      where: {
+        id: input.teacherId,
+      },
+      data: input.data,
+    });
+  }
+
 }
