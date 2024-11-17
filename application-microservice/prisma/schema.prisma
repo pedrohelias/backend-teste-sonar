@@ -13,18 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Student {
-  id                  String @id @default(cuid())
-  name                String
-  categorie           CategorieType
-  class               ClassType
-  turn                TurnType
-  disabled            Boolean   @default(false)
-  disabledAt          DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
 enum CategorieType {
   PARCIAL
   INTEGRAL
@@ -40,6 +28,18 @@ enum ClassType {
 enum TurnType {
   MATUTINO
   VESPERTINO
+}
+
+model Student {
+  id                  String @id @default(cuid())
+  name                String
+  categorie           CategorieType
+  class               ClassType
+  turn                TurnType
+  disabled            Boolean   @default(false)
+  disabledAt          DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model School {
