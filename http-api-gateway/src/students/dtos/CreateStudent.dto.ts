@@ -1,11 +1,20 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { CategorieType, ClassType, TurnType } from './Enums.dto';
 
 export class CreateStudentDto {
   @IsNotEmpty()
   @IsString()
   name: string;
 
-  @IsNumber()
+  @IsEnum(CategorieType)
   @IsNotEmpty()
-  monthlyPaymentValue: number;
+  categorie: CategorieType;
+
+  @IsEnum(ClassType)
+  @IsNotEmpty()
+  class: ClassType;
+
+  @IsEnum(TurnType)
+  @IsNotEmpty()
+  turn: TurnType;
 }

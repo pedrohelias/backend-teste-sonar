@@ -1,6 +1,7 @@
 import { CategorieType, ClassType, TurnType } from '@prisma/client';
 
-export class CreateStudentDto {
+export class StudentResponseDto {
+  id: string;
   name: string;
   categorie: CategorieType;
   class: ClassType;
