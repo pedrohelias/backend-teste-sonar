@@ -8,7 +8,7 @@ export class CreateTeacherDto {
 
   @IsNumber()
   @IsNotEmpty()
-  age: number;
+  numberOfClasses: number;
 
   @IsNotEmpty()
   @IsString()

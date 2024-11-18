@@ -1,6 +1,6 @@
 export class CreateTeacherDto {
     name: string;
-    age: number;
+    numberOfClasses: number;
     cpf: string;
     startDate: Date;
   }

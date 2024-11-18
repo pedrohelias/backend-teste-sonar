@@ -18,7 +18,7 @@ export class TeacherMicroserviceController {
       const teacher = await this.prisma.teacher.create({
         data: {
           name: createTeacherDto.name,
-          age: createTeacherDto.age,
+          numberOfClasses: createTeacherDto.numberOfClasses,
           cpf: createTeacherDto.cpf,
           startDate: new Date(createTeacherDto.startDate),
         },
