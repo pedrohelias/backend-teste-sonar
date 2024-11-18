@@ -50,24 +50,48 @@ export class TeacherMicroserviceController {
 
   @MessagePattern('listTeacher')
   async getAllTeachers(): Promise<TeacherResponseDto[]> {
-    return await this.teachersService.findAll();
+    try {
+      const response = await this.teachersService.findAll();
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   @MessagePattern('getTeacher')
   async get(@Payload() teacherId: string): Promise<TeacherResponseDto> {
-    return await this.teachersService.get(teacherId);
+    try {
+      const response = await this.teachersService.get(teacherId);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   @EventPattern('deleteTeacher')
   async disable(@Payload() teacherId: string) {
-    await this.teachersService.delete(teacherId);
+    try {
+      await this.teachersService.delete(teacherId);
+
+      return {
+        success: true,
+        message: `Successfully Teacher:${teacherId} deleted`
+      };
+    } catch (error) {
+      throw error;
+    }
+ 
   }
 
   @MessagePattern('updateTeacher')
   async update(
     @Payload() input: { data: CreateTeacherDto; teacherId: string },
   ): Promise<TeacherResponseDto> {
-    return await this.teachersService.update(input);
+    try {
+      const response = await this.teachersService.update(input);
+      return response
+    } catch (error) {
+      throw error
+    }
   }
-
 }

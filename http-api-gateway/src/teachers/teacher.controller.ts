@@ -20,26 +20,42 @@ export class TeacherController {
 
   @Get()
   async listTeacher() {
-    return this.natsClient.send('listTeacher', {});
+    try {
+      const response = this.natsClient.send('listTeacher', {});
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Get(':teacherId')
   async getTeacher(@Param('teacherId') teacherId: string) {
-    return await this.natsClient.send('getTeacher', teacherId);
+    try {
+      const response = await this.natsClient.send('getTeacher', teacherId);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Delete(':teacherId')
-  @HttpCode(204)
+  @HttpCode(200)
   async deleteTeacher(@Param('teacherId') teacherId: string) {
-    
-      return await lastValueFrom(this.natsClient.send('deleteTeacher', teacherId));
-    
+      try {
+        const response =  await lastValueFrom(this.natsClient.send('deleteTeacher', teacherId));
+        return response
+      } catch (error) {
+        throw error
+      }
   }
 
   @Patch(':teacherId')
-  updateTeacher(@Param('teacherId') teacherId: string, @Body() updateTeacherDto: CreateTeacherDto) {
-    this.natsClient.emit('updateTeacher', { data: updateTeacherDto, teacherId: teacherId });
+  async updateTeacher(@Param('teacherId') teacherId: string, @Body() updateTeacherDto: CreateTeacherDto) {
+    try {
+      const response = await this.natsClient.emit('updateTeacher', { data: updateTeacherDto, teacherId: teacherId });
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
-
-
 }
