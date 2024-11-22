@@ -1,0 +1,62 @@
+name: Microservicos e Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-e-build-microservicos:
+    runs-on: ubuntu-latest
+
+    steps:
+    #subindo o codigo pra esteira
+    - name: Subindo codigo para esteira
+      uses: actions/checkout@v3
+
+    # Setando o node
+    - name: Setando Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18 # Versao 18, no front tmb
+
+    # Instalar dependências do lint
+    - name: Instalando dependencias
+      run: yarn install
+
+    # Configurando o Docker Compose
+    - name: Setando Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
+
+    # Subindo o Docker Compose
+    - name: Iniciando Docker compose
+      run: docker-compose up -d
+
+    # Rodando Lint para cada microservico
+    - name: Rodando Lint para microservico
+      run: |
+        docker-compose exec -T api_gateway yarn lint
+        docker-compose exec -T users_microservice yarn lint
+        docker-compose exec -T application_microservice yarn lint
+
+    # 7. Verificar os serviços
+    - name: Verificando servicos
+      run: docker-compose ps
+
+    # 8. Rodar testes para cada microserviço
+#    - name: Run tests
+#      run: |
+#        docker-compose exec -T api_gateway yarn test
+#        docker-compose exec -T users_microservice yarn test
+#        docker-compose exec -T application_microservice yarn test
+
+
+    # 9. Encerrando os servicos
+    - name: Stop Docker Compose
+      if: always()
+      run: docker-compose down
