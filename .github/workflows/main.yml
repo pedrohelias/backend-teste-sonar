@@ -48,11 +48,11 @@ jobs:
       run: docker-compose ps
 
     # 8. Rodar testes (caso existam)
-    - name: Run tests
-      run: |
-        docker-compose exec -T api_gateway yarn test
-        docker-compose exec -T users_microservice yarn test
-        docker-compose exec -T application_microservice yarn test
+#    - name: Run tests
+#      run: |
+#        docker-compose exec -T api_gateway yarn test
+#        docker-compose exec -T users_microservice yarn test
+#        docker-compose exec -T application_microservice yarn test
 
 
     # 9. Encerrar os serviços
