@@ -1,0 +1,60 @@
+name: Run Microservices and Lint
+
+on:
+  push:
+    branches:
+      - main
+      - feat/sonarqube # Adicione as branches desejadas
+  pull_request:
+    branches:
+      - main
+      - feat/sonarqube
+
+jobs:
+  lint-and-run-services:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout do código
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. Configurar o Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18 # Use a versão adequada para o seu projeto
+
+    # 3. Instalar dependências para lint
+    - name: Install dependencies
+      run: yarn install
+
+    # 4. Checar lint
+    - name: Run lint
+      run: yarn lint
+
+    # 5. Configurar o Docker Compose
+    - name: Set up Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
+
+    # 6. Subir os serviços com Docker Compose
+    - name: Start Docker Compose
+      run: docker-compose up -d
+
+    # 7. Verificar os serviços
+    - name: Check services
+      run: docker-compose ps
+
+    # 8. Rodar testes (caso existam)
+    - name: Run tests
+      run: |
+        docker-compose exec api_gateway yarn test
+        docker-compose exec users_microservice yarn test
+        docker-compose exec application_microservice yarn test
+
+    # 9. Encerrar os serviços
+    - name: Stop Docker Compose
+      if: always()
+      run: docker-compose down
