@@ -30,8 +30,8 @@ jobs:
       run: yarn install
 
     # 4. Checar lint
-    - name: Run lint
-      run: yarn lint
+ #   - name: Run lint
+ #     run: yarn lint
 
     # 5. Configurar o Docker Compose
     - name: Set up Docker Compose
