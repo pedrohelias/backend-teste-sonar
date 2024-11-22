@@ -27,11 +27,11 @@ jobs:
     - name: Install dependencies
       run: yarn install
 
-    - name: Rodando Lint para cada microservico
-      run: |
-        docker-compose exec -T api_gateway yarn lint
-        docker-compose exec -T users_microservice yarn lint
-        docker-compose exec -T application_microservice yarn lint
+  #  - name: Rodando Lint para cada microservico
+  #    run: |
+  #      docker-compose exec -T api_gateway yarn lint
+  #      docker-compose exec -T users_microservice yarn lint
+  #      docker-compose exec -T application_microservice yarn lint
         
     # 4. Lint -> Ainda a checar - comentado para testar o funcionamento da esteira
  #   - name: Run lint
@@ -48,6 +48,12 @@ jobs:
     # 6. Subindo docker compose
     - name: Start Docker Compose
       run: docker-compose up -d
+
+    - name: Rodando Lint para cada microservico
+      run: |
+        docker-compose exec -T api_gateway yarn lint
+        docker-compose exec -T users_microservice yarn lint
+        docker-compose exec -T application_microservice yarn lint
 
     # 7. Verificar os serviços
     - name: Check services
