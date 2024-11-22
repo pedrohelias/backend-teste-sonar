@@ -2,18 +2,15 @@ import { Test } from '@nestjs/testing';
 import { CreateStudentDto } from './dtos/CreateStudent.dto';
 import { StudentMicroserviceController } from './student.controller';
 import { StudentsModule } from './student.module';
-import { StudentsService } from './student.service';
 
 describe('StudentsController', () => {
   let studentsController: StudentMicroserviceController;
-  let studentsService: StudentsService;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       imports: [StudentsModule],
     }).compile();
 
-    studentsService = module.get(StudentsService);
     studentsController = module.get(StudentMicroserviceController);
   });
 
@@ -21,7 +18,7 @@ describe('StudentsController', () => {
 
   describe('getAll', () => {
     it('Should return an array of students', async () => {
-      expect(await studentsController.getAll()).toBeInstanceOf(Array<Object>);
+      expect(await studentsController.getAll()).toBeInstanceOf(Array<object>);
     });
   });
 

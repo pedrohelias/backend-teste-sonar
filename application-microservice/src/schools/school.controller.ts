@@ -1,10 +1,5 @@
 import { Controller, Inject } from '@nestjs/common';
-import {
-  ClientProxy,
-  EventPattern,
-  MessagePattern,
-  Payload,
-} from '@nestjs/microservices';
+import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateSchoolDto } from './dtos/CreateStudent.dto';
 import { SchoolResponseDto } from './dtos/SchoolResponse.dto';
 import { SchoolsService } from './school.service';
@@ -16,9 +11,9 @@ export class SchoolMicroserviceController {
     private readonly schoolService: SchoolsService,
   ) {}
 
-  @EventPattern('createSchool')
+  @MessagePattern('createSchool')
   async createSchool(@Payload() createSchoolDto: CreateSchoolDto) {
-    await this.schoolService.create(createSchoolDto);
+    return await this.schoolService.create(createSchoolDto);
   }
 
   @MessagePattern('listSchool')
@@ -31,9 +26,9 @@ export class SchoolMicroserviceController {
     return await this.schoolService.get(schoolId);
   }
 
-  @EventPattern('disableSchool')
+  @MessagePattern('disableSchool')
   async disable(@Payload() schoolId: string) {
-    await this.schoolService.disable(schoolId);
+    return await this.schoolService.disable(schoolId);
   }
 
   @MessagePattern('updateSchool')

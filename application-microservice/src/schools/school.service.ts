@@ -20,8 +20,8 @@ export class SchoolsService {
     return await this.schoolsPrismaService.get(schoolId);
   }
 
-  async disable(schoolId: string): Promise<void> {
-    await this.schoolsPrismaService.disable(schoolId);
+  async disable(schoolId: string): Promise<SchoolResponseDto> {
+    return await this.schoolsPrismaService.disable(schoolId);
   }
 
   async update(input: { data: CreateSchoolDto; schoolId: string }) {

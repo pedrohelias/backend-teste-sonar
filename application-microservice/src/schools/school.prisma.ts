@@ -1,6 +1,5 @@
-// src/modules/schools/prisma/schools.prisma.ts
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/database/prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { CreateSchoolDto } from './dtos/CreateStudent.dto';
 import { SchoolResponseDto } from './dtos/SchoolResponse.dto';
 
@@ -33,8 +32,8 @@ export class SchoolsPrismaService {
     });
   }
 
-  async disable(schoolId: string): Promise<void> {
-    await this.prisma.school.update({
+  async disable(schoolId: string): Promise<SchoolResponseDto> {
+    return await this.prisma.school.update({
       where: {
         id: schoolId,
       },

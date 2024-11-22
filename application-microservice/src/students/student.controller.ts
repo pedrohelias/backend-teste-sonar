@@ -1,9 +1,5 @@
 import { Controller, Inject } from '@nestjs/common';
-import {
-  ClientProxy,
-  MessagePattern,
-  Payload,
-} from '@nestjs/microservices';
+import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateStudentDto } from './dtos/CreateStudent.dto';
 import { StudentResponseDto } from './dtos/StudentResponse.dto';
 import { StudentsService } from './student.service';
@@ -12,7 +8,7 @@ import { StudentsService } from './student.service';
 export class StudentMicroserviceController {
   constructor(
     @Inject('NATS_SERVICE') private natsClients: ClientProxy,
-    private readonly studentService: StudentsService
+    private readonly studentService: StudentsService,
   ) {}
 
   @MessagePattern('createStudent')
