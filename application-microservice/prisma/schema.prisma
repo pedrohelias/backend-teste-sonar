@@ -52,3 +52,16 @@ model School {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 }
+
+model Teacher {
+  id              String   @id @default(cuid())
+  name            String
+  numberOfClasses Int
+  cpf             String   @unique @db.VarChar(14)
+  startDate       DateTime @map("start_date")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("teacher")
+}
