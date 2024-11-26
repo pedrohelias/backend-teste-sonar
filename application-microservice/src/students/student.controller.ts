@@ -62,7 +62,7 @@ export class StudentMicroserviceController {
       const response = await this.studentService.disable(studentId);
       return {
         statusCode: 200,
-        message: 'Student updated successfully',
+        message: 'Student deleted successfully',
         data: response,
       };
     } catch (error) {
