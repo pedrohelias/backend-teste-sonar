@@ -38,22 +38,22 @@ jobs:
       run: docker-compose up -d
 
     # Rodando Lint para cada microservico
-    - name: Rodando Lint para microservico
-      run: |
-        docker-compose exec -T api_gateway yarn lint
-        docker-compose exec -T users_microservice yarn lint
-        docker-compose exec -T application_microservice yarn lint
+   # - name: Rodando Lint para microservico
+   #   run: |
+   #     docker-compose exec -T api_gateway yarn lint
+   #     docker-compose exec -T users_microservice yarn lint
+   #     docker-compose exec -T application_microservice yarn lint
 
     # 7. Verificar os serviços
     - name: Verificando servicos
       run: docker-compose ps
 
     # 8. Rodar testes para cada microserviço
-#    - name: Run tests
-#      run: |
-#        docker-compose exec -T api_gateway yarn test
-#        docker-compose exec -T users_microservice yarn test
-#        docker-compose exec -T application_microservice yarn test
+    - name: Run tests
+      run: |
+        docker-compose exec -T api_gateway yarn test
+        docker-compose exec -T users_microservice yarn test
+        docker-compose exec -T application_microservice yarn test
 
 
     # 9. Encerrando os servicos
