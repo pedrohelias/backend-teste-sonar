@@ -17,11 +17,11 @@ services:
     volumes:
       - ./users-microservice/src:/usr/src/app/src
       - ./users-microservice/prisma:/usr/src/app/prisma
-    command: yarn start:dev
+    command: ./wait-for-it.sh postgres_db_users:5432 -- yarn start:dev
     depends_on:
       - postgres_db_users
     environment:
-      - DATABASE_URL=postgresql://postgres:password@postgres_db_application:5432/application_db
+      - DATABASE_URL=postgresql://postgres:password@postgres_db_users:5432/users_db
 
   application_microservice:
     build: ./application-microservice
@@ -30,11 +30,11 @@ services:
     volumes:
       - ./application-microservice/src:/usr/src/app/src
       - ./application-microservice/prisma:/usr/src/app/prisma
-    command: "yarn start:dev"
+    command: ./wait-for-it.sh postgres_db_application:5433 -- yarn start:dev
     depends_on:
       - postgres_db_application
     environment:
-      - DATABASE_URL=postgresql://postgres:password@postgres_db_users:5432/application_db
+      - DATABASE_URL=postgresql://postgres:password@postgres_db_application:5433/application_db
 
   nats:
     image: nats
@@ -51,6 +51,7 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - pgdata_users:/var/lib/postgresql/data
+      - ./init/users.sql:/docker-entrypoint-initdb.d/users.sql
 
   postgres_db_application:
     image: postgres
@@ -62,7 +63,9 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - pgdata_application:/var/lib/postgresql/data
+      - ./init/application.sql:/docker-entrypoint-initdb.d/application.sql
 
 volumes:
   pgdata_users:
   pgdata_application:
+
